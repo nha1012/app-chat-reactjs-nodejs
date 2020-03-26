@@ -3,7 +3,6 @@ import { Route, Redirect } from 'react-router-dom';
 import Settings from './Settings';
 import Contact from './Contact';
 import ChatLeft from './ChatLeft';
-import Notifycation from './Notifycation';
 import { isAuth } from '../../helpers';
 
 class index extends Component {
@@ -17,7 +16,6 @@ class index extends Component {
                     <Route path="/home/setting/" component={Settings}></Route>
                     <Route path="/home/contact/" component={Contact}></Route>
                     <Route path="/home/chat-left/:id" component={ChatLeft}></Route>
-                    <Route path="/home/notifycation/" component={Notifycation}></Route>
             </div>
             
 );
