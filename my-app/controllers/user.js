@@ -2,7 +2,7 @@ import userModel from '../models/User';
 import path from 'path';
 import multer from 'multer';
 const storage = multer.diskStorage({
-    destination: "../client/public/dist/img/avatars",
+    destination: "./client/dist/img/avatars",
     filename: function(req, file, cb){
        cb(null,"IMAGE-" + Date.now() + path.extname(file.originalname));
     }
