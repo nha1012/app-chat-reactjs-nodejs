@@ -3,10 +3,10 @@ export default class mediahendle{
         return new Promise((resolve,reject)=>{
             navigator.mediaDevices.getUserMedia({video:true, audio:false})
             .then(stream=>{
-                resolve(stream);
+               return resolve(stream);
             })
             .catch(err=>{
-                reject(err)
+                return reject(err)
             })
         })
     }
