@@ -7,6 +7,7 @@ import { animateScroll } from "react-scroll";
 import io from 'socket.io-client';
 import 'emoji-mart/css/emoji-mart.css';
 import { Picker } from 'emoji-mart';
+import media from '../mediaHandle';
 class Chat extends Component {
     constructor(props) {
         super(props);
@@ -22,7 +23,7 @@ class Chat extends Component {
             isRequire: false
         }
         this.socket = [null];
-        this.refMeVideo = React.createRef();
+        this.media = new media();
     }
     getAllContactAndMessage(){
         Axios({
@@ -199,6 +200,16 @@ class Chat extends Component {
         this.setState({
             isRequire:true
         })
+        
+        this.media.getPermissions()
+        .then(stream=>{
+            try {
+                this.myVideo.srcObject = stream
+            } catch (error) {
+                this.myVideo.src = URL.createObjectURL(stream);
+            }
+            this.myVideo.play();
+        })
     }
 
     renderRequireCallVideo(){
@@ -207,10 +218,10 @@ class Chat extends Component {
             return (
                 <div className="call video-call">
                     
-                    <video className="you"  ref={this.refMeVideo} width="300" autoPlay>
+                    <video className="you"  ref={(ref)=>this.myVideo= ref} >
                     </video>
                     <button className="btn option call-end" onClick={()=>this.offAll()}><i className="material-icons md-30 off">call_end</i></button>
-                    <video className='me' ref={this.refMeVideo}  width="300" autoPlay></video>
+                    <video className='me' ref={(ref)=>this.youVideo= ref}  ></video>
                 </div>
     
             );
