@@ -207,7 +207,7 @@ class Chat extends Component {
             } catch (error) {
                 this.myVideo.src = URL.createObjectURL(stream);
             }
-            
+            this.myVideo.play();
         })
         .catch(err=>{
             console.log(err);
