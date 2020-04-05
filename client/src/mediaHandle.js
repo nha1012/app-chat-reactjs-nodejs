@@ -1,12 +1,12 @@
-export default class mediahendle{
+export default class MediaHandle{
     getPermissions(){
         return new Promise((resolve,reject)=>{
-            navigator.mediaDevices.getUserMedia({video:true, audio:false})
+            navigator.mediaDevices.getUserMedia({video:true, audio:true})
             .then(stream=>{
-               return resolve(stream);
+                resolve(stream);
             })
             .catch(err=>{
-                return reject(err)
+                reject(err)
             })
         })
     }
