@@ -7,7 +7,7 @@ import { animateScroll } from "react-scroll";
 import io from 'socket.io-client';
 import 'emoji-mart/css/emoji-mart.css';
 import { Picker } from 'emoji-mart';
-import media from '../component/MediaHandle';
+import media from './MediaHandle';
 class Chat extends Component {
     constructor(props) {
         super(props);
@@ -200,20 +200,18 @@ class Chat extends Component {
         this.setState({
             isRequire:true
         })
-        this.media.getPermissions()
-        .then(stream=>{
-            try {
-                this.myVideo.srcObject = stream
-            } catch (error) {
-                this.myVideo.src = URL.createObjectURL(stream);
-            }
-            this.myVideo.play();
-        })
-        .catch(err=>{
-            console.log(err);
-        })
     }
     renderRequireCallVideo(){
+        const config = {audio:true,video:true}
+        const success = (stream)=>{
+            this.myVideo.current.srcObject= stream
+        }
+        const fail = (err=>{
+            console.log(err);
+        })
+        navigator.getUserMedia(config, success, fail);
+
+        
         if(this.state.isRequire===true){
             return (
                 <div className="call video-call">
@@ -301,7 +299,6 @@ class Chat extends Component {
                                         </div>
                                 )
                             })}
-                             <video id="me" className='me' ref={this.myVideo} width="300px"></video>
                         </div>
                         </div>
                     </div>
