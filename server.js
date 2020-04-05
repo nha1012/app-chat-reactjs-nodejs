@@ -45,7 +45,7 @@ mongoose
 app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
-// app.use(cors()); // allows all origins
+
 if ((process.env.NODE_ENV = 'production')) {
     // app.use(cors({ origin: `http://localhost:3000` }));
     app.use(express.static('client/build'));
@@ -53,6 +53,9 @@ if ((process.env.NODE_ENV = 'production')) {
     app.get("*",(req,res)=>{
       res.sendFile(path.resolve(__dirname,'client','build','index.html'));
     })
+}
+if ((process.env.NODE_ENV = 'development')) {
+  app.use(cors({ origin: `http://localhost:3000`}));
 }
 initSocket(io)
 // middleware
