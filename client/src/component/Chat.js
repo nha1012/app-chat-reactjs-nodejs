@@ -7,7 +7,7 @@ import { animateScroll } from "react-scroll";
 import io from 'socket.io-client';
 import 'emoji-mart/css/emoji-mart.css';
 import { Picker } from 'emoji-mart';
-import media from '../MediaHandle';
+import media from '../component/MediaHandle';
 class Chat extends Component {
     constructor(props) {
         super(props);
