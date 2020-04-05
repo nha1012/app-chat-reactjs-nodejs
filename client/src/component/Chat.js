@@ -7,11 +7,10 @@ import { animateScroll } from "react-scroll";
 import io from 'socket.io-client';
 import 'emoji-mart/css/emoji-mart.css';
 import { Picker } from 'emoji-mart';
-import media from '../mediaHandle';
+import media from '../MediaHandle';
 class Chat extends Component {
     constructor(props) {
         super(props);
-       
         this.state={
             message:"",
             isChat:false,
@@ -23,6 +22,7 @@ class Chat extends Component {
             isRequire: false
         }
         this.socket = [null];
+        this.myVideo = React.createRef();
         this.media = new media();
     }
     getAllContactAndMessage(){
@@ -196,11 +196,11 @@ class Chat extends Component {
             isCallVideo:false
         })
     }
-    callRequire=async()=>{
+    callRequire=()=>{
         this.setState({
             isRequire:true
         })
-        await this.media.getPermissions()
+        this.media.getPermissions()
         .then(stream=>{
             try {
                 this.myVideo.srcObject = stream
@@ -211,20 +211,15 @@ class Chat extends Component {
         })
         .catch(err=>{
             console.log(err);
-            
         })
     }
-
     renderRequireCallVideo(){
-       
         if(this.state.isRequire===true){
             return (
                 <div className="call video-call">
-                    
-                    <video className="you"  ref={(ref)=>this.myVideo= ref} >
-                    </video>
+                    <video id="you" className="you" ref={this.myVideo}></video>
                     <button className="btn option call-end" onClick={()=>this.offAll()}><i className="material-icons md-30 off">call_end</i></button>
-                    <video className='me' ref={(ref)=>this.youVideo= ref}  ></video>
+                    <video id="me" className='me' ref={this.myVideo} width="300px" controls></video>
                 </div>
     
             );
@@ -306,6 +301,7 @@ class Chat extends Component {
                                         </div>
                                 )
                             })}
+                             <video id="me" className='me' ref={this.myVideo} width="300px"></video>
                         </div>
                         </div>
                     </div>
