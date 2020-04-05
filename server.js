@@ -7,7 +7,7 @@ import jsonwebtoken from 'jsonwebtoken';
 import routerWeb from './routes/index';
 import cookieParser from 'cookie-parser';
 import initSocket from './socket.io/index';
-
+import express from 'express';
 require('dotenv').config();
 var app = require('express')(),
   server  = require("http").createServer(app),
@@ -45,8 +45,9 @@ app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 // app.use(cors()); // allows all origins
-if ((process.env.NODE_ENV = 'development')) {
-    app.use(cors({ origin: `http://localhost:3000` }));
+if ((process.env.NODE_ENV = 'production')) {
+    // app.use(cors({ origin: `http://localhost:3000` }));
+    app.use(express.static('client/build'))
 }
 initSocket(io)
 // middleware
