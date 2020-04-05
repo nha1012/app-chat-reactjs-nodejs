@@ -196,11 +196,11 @@ class Chat extends Component {
             isCallVideo:false
         })
     }
-    callRequire=()=>{
+    callRequire=async()=>{
         this.setState({
             isRequire:true
         })
-        this.media.getPermissions()
+        await this.media.getPermissions()
         .then(stream=>{
             try {
                 this.myVideo.srcObject = stream
