@@ -204,14 +204,15 @@ class Chat extends Component {
     renderRequireCallVideo(){
         const config = {audio:true,video:true}
         const success = (stream)=>{
-            this.myVideo.current.srcObject= stream
+            this.myVideo.srcObject= stream
         }
         const fail = (err=>{
             console.log(err);
         })
-        navigator.getUserMedia(config, success, fail);
-
-        
+        navigator.mediaDevices.getUserMedia(config)
+        .then(success)
+        .catch(fail)
+    
         if(this.state.isRequire===true){
             return (
                 <div className="call video-call">
