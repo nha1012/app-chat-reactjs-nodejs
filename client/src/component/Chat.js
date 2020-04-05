@@ -200,7 +200,6 @@ class Chat extends Component {
         this.setState({
             isRequire:true
         })
-        
         this.media.getPermissions()
         .then(stream=>{
             try {
@@ -208,7 +207,11 @@ class Chat extends Component {
             } catch (error) {
                 this.myVideo.src = URL.createObjectURL(stream);
             }
-            this.myVideo.play();
+            
+        })
+        .catch(err=>{
+            console.log(err);
+            
         })
     }
 
