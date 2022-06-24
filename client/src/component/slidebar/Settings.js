@@ -27,7 +27,8 @@ class Settings extends Component {
 
         axios({
             method:"POST",
-            url:"/user/update",
+            baseURL: "http://localhost:4000",
+url:"/user/update",
             data :form
         })
         .then(res=>{

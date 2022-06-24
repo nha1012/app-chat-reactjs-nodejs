@@ -23,7 +23,8 @@ class SignUp extends Component {
         const { name, email, password } = this.state;   
         axios({
             method: 'POST',
-            url: '/signup',
+            baseURL: "http://localhost:4000",
+url: '/signup',
             data: { name, email, password }
         })
             .then(res=>{
