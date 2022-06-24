@@ -28,7 +28,8 @@ class Chat extends Component {
     getAllContactAndMessage(){
         Axios({
             method:"POST",
-            url:"/contact/get-all-contact-and-message",
+            baseURL: "http://localhost:4000",
+url:"/contact/get-all-contact-and-message",
             data:{userId:JSON.parse(localStorage.getItem('id'))}
         })
         .then(res=>{
@@ -62,7 +63,8 @@ class Chat extends Component {
             })
             Axios({
                 method:"POST",
-                url:"/contact/get-all-contact-and-message",
+                baseURL: "http://localhost:4000",
+url:"/contact/get-all-contact-and-message",
                 data:{userId:JSON.parse(localStorage.getItem('id'))}
             })
             .then(res=>{
@@ -124,7 +126,8 @@ class Chat extends Component {
         if(this.state.isChat===true){
             Axios({
                 method:"POST",
-                url:"/message/create-message",
+                baseURL: "http://localhost:4000",
+url:"/message/create-message",
                 data:{receiverId:receiverId, senderId:senderId, text:this.state.message}
             })
             .then(res=>{

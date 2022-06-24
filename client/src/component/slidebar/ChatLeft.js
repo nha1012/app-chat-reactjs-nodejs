@@ -19,7 +19,8 @@ class ChatLeft extends Component {
         Axios({
             method:"POST",
             data:{senderId:JSON.parse(localStorage.getItem('id')),receiverId:id},
-            url:'/message/get-message'
+            baseURL: "http://localhost:4000",
+url:'/message/get-message'
         })
         .then(res=>{
             this.setState({
@@ -35,7 +36,8 @@ class ChatLeft extends Component {
     getAllContactAndMessage(){
         Axios({
             method:"POST",
-            url:"/contact/get-all-contact-and-message",
+            baseURL: "http://localhost:4000",
+url:"/contact/get-all-contact-and-message",
             data:{userId:JSON.parse(localStorage.getItem('id'))}
         })
         .then(res=>{

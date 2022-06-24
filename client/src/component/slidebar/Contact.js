@@ -63,7 +63,8 @@ class Contact extends Component {
         let arr =  this.state.allContact
         axios({
             method:"POST",
-            url:"/contact/add-contact",
+            baseURL: "http://localhost:4000",
+url:"/contact/add-contact",
             data:{userId: JSON.parse(localStorage.getItem('id')),contactId:idContact}
         })
         .then(res=>{
@@ -80,7 +81,8 @@ class Contact extends Component {
     UNSAFE_componentWillMount() {
         axios({
             method:'POST',
-            url:"/contact/get-all-contact",
+            baseURL: "http://localhost:4000",
+url:"/contact/get-all-contact",
             data: {userId : JSON.parse(localStorage.getItem('id'))}
         })
             .then(res=>{

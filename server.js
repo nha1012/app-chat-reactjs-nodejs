@@ -46,18 +46,24 @@ app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
-if ((process.env.NODE_ENV = 'production')) {
-    app.use(express.static('client/build'));
-    app.get("*",(req,res)=>{
-      res.sendFile(path.resolve(__dirname,'client','build','index.html'));
-    })
-}
-if ((process.env.NODE_ENV = 'development')) {
-  app.use(cors({ origin: `http://localhost:3000`}));
-}
+
+app.use(
+  cors({
+    origin: '*', // allow to server to accept request from different origin
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    credentials: true // allow session cookie from browser to pass through
+  })
+);
+
 initSocket(io)
 // middleware
 routerWeb(app);
+app.use(express.static(__dirname));
+
+app.get("/*", function(req, res) {
+  res.sendFile(path.join(__dirname, "index.html"));
+});
+
 app.use(function(req, res, next) {
     if (req.headers && req.headers.authorization && req.headers.authorization.split(' ')[0] === 'JWT') {
       jsonwebtoken.verify(req.headers.authorization.split(' ')[1], 'RESTFULAPIs', function(err, decode) {
