@@ -58,6 +58,7 @@ export default function usePushNotifications() {
           code: 0
         });
       }
+      onClickSusbribeToPushNotification()
       setLoading(false);
     });
   };
@@ -75,6 +76,7 @@ export default function usePushNotifications() {
       .then(function(subscrition) {
         setUserSubscription(subscrition);
         setLoading(false);
+        onClickSendSubscriptionToPushServer(subscrition)
       })
       .catch((err) => {
         console.error(
@@ -96,7 +98,7 @@ export default function usePushNotifications() {
    * define a click handler that sends the push susbcribtion to the push server.
    * Once the subscription ics created on the server, it saves the id using the hook setPushServerSubscriptionId
    */
-  const onClickSendSubscriptionToPushServer = () => {
+  const onClickSendSubscriptionToPushServer = (userSubscription) => {
     setLoading(true);
     setError(false);
     axios
@@ -104,6 +106,7 @@ export default function usePushNotifications() {
       .then(function(response) {
         setPushServerSubscriptionId(response.data.id);
         setLoading(false);
+        onClickSendNotification(response.data.id)
       })
       .catch((err) => {
         setLoading(false);
@@ -114,10 +117,10 @@ export default function usePushNotifications() {
   /**
    * define a click handler that requests the push server to send a notification, passing the id of the saved subscription
    */
-  const onClickSendNotification = async () => {
+  const onClickSendNotification = async (id) => {
     setLoading(true);
     setError(false);
-    axios.get(`http://localhost:4000/subscription/${pushServerSubscriptionId}`).catch((error) => {
+    axios.get(`http://localhost:4000/subscription/${id}`).catch((error) => {
       setLoading(false);
       setError(error);
     });

@@ -9,6 +9,7 @@ import routerWeb from './routes/index';
 import cookieParser from 'cookie-parser';
 import initSocket from './socket.io/index';
 import express from 'express';
+
 require('dotenv').config();
 var app = require('express')(),
   server  = require("http").createServer(app),
@@ -27,10 +28,6 @@ app.use(session);
  
 io.use(sharedsession(session));
  
-const port = process.env.PORT || 4000;
-server.listen(port, () => {
-    console.log(`API is running on port ${port}`);
-});
 mongoose
     .connect(process.env.DATABASE_URL, {
         useNewUrlParser: true,
@@ -77,3 +74,7 @@ app.use(function(req, res, next) {
     }
   });
 
+const port = process.env.PORT || 4000;
+server.listen(port, () => {
+    console.log(`API is running on port ${port}`);
+});
