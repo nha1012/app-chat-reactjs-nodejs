@@ -56,6 +56,15 @@ export const isAuth = () => {
         }
     }
 };
+export const getUserId = () => {
+    if (window !== 'undefined') {
+        if (localStorage.getItem('id')) {
+            return JSON.parse(localStorage.getItem('id'));
+        } else {
+            return false;
+        }
+    }
+};
 
 export const signout = next => {
     removeCookie('token');

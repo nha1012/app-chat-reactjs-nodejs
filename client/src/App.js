@@ -10,39 +10,32 @@ import {
 } from "react-router-dom"
 import Chat from "./component/Chat"
 import ChatLeft from "./component/slidebar/ChatLeft"
-
+import { isAuth, getUserId } from "./helpers"
 import usePushNotifications from "./usePushNotifications"
+import { useLocation } from 'react-router-dom';
 
 const App = () => {
+  const location = useLocation();
   const {
-    userConsent,
-    pushNotificationSupported,
-    userSubscription,
     onClickAskUserPermission,
-    onClickSusbribeToPushNotification,
-    onClickSendSubscriptionToPushServer,
-    pushServerSubscriptionId,
-    onClickSendNotification,
-    error,
-    loading,
   } = usePushNotifications()
   useEffect(() => {
-    onClickAskUserPermission()
-  }, [])
+    if (!!isAuth()) {
+      onClickAskUserPermission(getUserId())
+    }
+  }, [location.pathname])
 
   return (
-    <Router>
-      <Switch>
-        <Route exact path="/">
-          <Redirect to="/home/chat-left/123"></Redirect>
-        </Route>
-        <Route path="/home" component={Home}></Route>
-        <Route path="/signin" component={SignIn} />
-        <Route path="/signup" component={SignUp} />
-        <Route path="/home/*/:id" component={Chat} />
-        <Route path="/home/chat-left" component={ChatLeft} />
-      </Switch>
-    </Router>
+    <Switch>
+      <Route exact path="/">
+        <Redirect to="/home/chat-left/123"></Redirect>
+      </Route>
+      <Route path="/home" component={Home}></Route>
+      <Route path="/signin" component={SignIn} />
+      <Route path="/signup" component={SignUp} />
+      <Route path="/home/*/:id" component={Chat} />
+      <Route path="/home/chat-left" component={ChatLeft} />
+    </Switch>
   )
 }
 export default App

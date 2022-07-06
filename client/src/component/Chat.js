@@ -204,29 +204,6 @@ url:"/message/create-message",
             isRequire:true
         })
     }
-    renderRequireCallVideo(){
-        const config = {audio:true,video:true}
-        const success = (stream)=>{
-            this.myVideo.srcObject= stream
-        }
-        const fail = (err=>{
-            console.log(err);
-        })
-        navigator.mediaDevices.getUserMedia(config)
-        .then(success)
-        .catch(fail)
-    
-        if(this.state.isRequire===true){
-            return (
-                <div className="call video-call">
-                    <video id="you" className="you" ref={this.myVideo}></video>
-                    <button className="btn option call-end" onClick={()=>this.offAll()}><i className="material-icons md-30 off">call_end</i></button>
-                    <video id="me" className='me' ref={this.myVideo} width="300px" controls></video>
-                </div>
-    
-            );
-        }
-    }
     render() { 
         if(!isAuth()){
             return <Redirect to="/signin"></Redirect>
@@ -234,7 +211,6 @@ url:"/message/create-message",
         let arrMessage = this.props.allMessage
         return (
             <div>
-                {this.renderRequireCallVideo()}
                 {this.renderCallVideo()}
                  <div className="chat" id="chat1">
                     <div className="top">

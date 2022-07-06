@@ -30,6 +30,10 @@ const userScheama = new mongoose.Schema(
             data: String,
             default: ''
         },
+        browserId: {
+            type: String,
+            required: false
+        },
         createdAt:{type:Number,default:Date.now()},
         updatedAt:{type:Number,default:Date.now()},
     },

@@ -1,6 +1,14 @@
 import userModel from '../models/User';
 import path from 'path';
 import multer from 'multer';
+var crypto = require('crypto');
+
+function createHash(input) {
+    const md5sum = crypto.createHash('md5');
+    md5sum.update(Buffer.from(input));
+    return md5sum.digest('hex');
+  }
+  
 const storage = multer.diskStorage({
     destination: "./client/dist/img/avatars",
     filename: function(req, file, cb){
@@ -37,4 +45,17 @@ exports.updateUser= (req,res)=>{
         })
     })
    });
+}
+exports.updateBrowserId= (req,res)=>{ 
+    const subscriptionRequest = req.body.data;
+    const susbscriptionId = createHash(JSON.stringify(subscriptionRequest));
+    subscriptions[susbscriptionId] = subscriptionRequest;
+    console.log(subscriptionRequest);
+    userModel.findOneAndUpdate({ '_id': req.cookies.id }, { 'browserId': req }).exec((err,user)=>{
+        if(err)
+            return console.log(err);
+        return res.status(200).json({
+            newAvatar: avatarName
+        })
+    })
 }
