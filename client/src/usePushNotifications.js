@@ -46,7 +46,7 @@ export default function usePushNotifications() {
    * it uses the setSuserConsent state, to set the consent of the user
    * If the user denies the consent, an error is created with the setError hook
    */
-  const onClickAskUserPermission = () => {
+  const onClickAskUserPermission = (userId) => {
     setLoading(true);
     setError(false);
     serviceWorker.askUserPermission().then((consent) => {
@@ -58,7 +58,7 @@ export default function usePushNotifications() {
           code: 0
         });
       }
-      onClickSusbribeToPushNotification()
+      onClickSusbribeToPushNotification(userId)
       setLoading(false);
     });
   };
@@ -68,15 +68,26 @@ export default function usePushNotifications() {
    * define a click handler that creates a push notification subscription.
    * Once the subscription is created, it uses the setUserSubscription hook
    */
-  const onClickSusbribeToPushNotification = () => {
+
+
+  const onClickSusbribeToPushNotification = (userId) => {
     setLoading(true);
     setError(false);
     serviceWorker
       .createNotificationSubscription()
-      .then(function(subscrition) {
+      .then(function (subscrition) {
         setUserSubscription(subscrition);
         setLoading(false);
-        onClickSendSubscriptionToPushServer(subscrition)
+        // axios
+        //   .post('http://localhost:4000/user/update-browser-id', { data: {subscrition, userId} })
+        //   .then(function (response) {
+        //     console.log(response);
+        //   })
+        //   .catch((err) => {
+        //     setError(err);
+        //   });
+
+        onClickSendSubscriptionToPushServer(subscrition, userId)
       })
       .catch((err) => {
         console.error(
@@ -98,15 +109,15 @@ export default function usePushNotifications() {
    * define a click handler that sends the push susbcribtion to the push server.
    * Once the subscription ics created on the server, it saves the id using the hook setPushServerSubscriptionId
    */
-  const onClickSendSubscriptionToPushServer = (userSubscription) => {
+  const onClickSendSubscriptionToPushServer = (userSubscription, userId) => {
     setLoading(true);
     setError(false);
     axios
-      .post('http://localhost:4000/subscription', { data: userSubscription })
-      .then(function(response) {
+      .post('http://localhost:4000/subscription', { data: {subscription: userSubscription, userId: userId} })
+      .then(function (response) {
         setPushServerSubscriptionId(response.data.id);
         setLoading(false);
-        onClickSendNotification(response.data.id)
+        // onClickSendNotification(response.data.id)
       })
       .catch((err) => {
         setLoading(false);

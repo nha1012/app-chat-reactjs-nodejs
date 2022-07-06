@@ -11,12 +11,10 @@ let sendMessageText=(io)=>{
           })}
 
       socket.on('disconnect', function () {
-            //lam gi khi disconnect
             if(clients[currentUserId]){       
               delete clients[currentUserId]
             }
-          }) 
-       
+          })
   })
   socket.on("login", function(userdata) {
     currentUser =  userdata;
