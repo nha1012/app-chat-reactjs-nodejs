@@ -31,7 +31,7 @@ function sendPushNotification(userId, text, senderId) {
       JSON.stringify({
         title: `New messages from ${userId}`,
         text: text,
-        image: '/images/jason-leung-HM6TMmevbZQ-unsplash.jpg',
+        image: '/dist/img/favicon.png',
         tag: 'new-messages',
         url: `/home/chat-left/${senderId}`
       })
